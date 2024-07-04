@@ -1,15 +1,7 @@
-//
-//  AddBudgetScreen.swift
-//  BudgetApp
-//
-//  Created by Mohammad Azam on 6/21/24.
-//
-
 import SwiftUI
 import Supabase
 
 struct AddBudgetScreen: View {
-    
     @State private var name: String = ""
     @State private var limit: Double?
     
@@ -27,7 +19,6 @@ struct AddBudgetScreen: View {
     @Binding var budgets: [Budget]
     
     private func saveBudget() async {
-        
         guard let limit = limit else { return }
         
         let budget = Budget(name: name, limit: limit)
@@ -50,7 +41,6 @@ struct AddBudgetScreen: View {
         } catch {
             print(error)
         }
-        
     }
     
     var body: some View {

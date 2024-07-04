@@ -1,10 +1,3 @@
-//
-//  SupabaseEnvironmentKey.swift
-//  BudgetApp
-//
-//  Created by Mohammad Azam on 6/20/24.
-//
-
 import Foundation
 import SwiftUI
 import Supabase

@@ -1,21 +1,12 @@
-//
-//  ContentView.swift
-//  BudgetApp
-//
-//  Created by Mohammad Azam on 6/20/24.
-//
-
 import SwiftUI
 
 struct BudgetListScreen: View {
-    
     @Environment(\.supabaseClient) private var supabaseClient
     @State private var budgets: [Budget] = []
     
     @State private var isPresented: Bool = false
     
     private func fetchBudgets() async {
-          
         do {
             budgets = try await supabaseClient
                 .from("budgets")
@@ -28,7 +19,6 @@ struct BudgetListScreen: View {
     }
     
     private func deleteBudget(_ budget: Budget) async {
-        
         guard let id = budget.id else { return }
         
         do {
@@ -40,11 +30,9 @@ struct BudgetListScreen: View {
             
             // remove budget from budgets array
             budgets = budgets.filter { $0.id! != id }
-            
         } catch {
             print(error)
         }
-        
     }
     
     var body: some View {
@@ -55,9 +43,11 @@ struct BudgetListScreen: View {
                 } label: {
                     BudgetCellView(budget: budget)
                 }
-            }.onDelete(perform: { indexSet in
+            }
+            .onDelete(perform: { indexSet in
                 guard let index = indexSet.last else { return }
                 let budget = budgets[index]
+                
                 Task {
                     await deleteBudget(budget)
                 }
@@ -84,11 +74,11 @@ struct BudgetListScreen: View {
 #Preview {
     NavigationStack {
         BudgetListScreen()
-    }.environment(\.supabaseClient, .development)
+    }
+    .environment(\.supabaseClient, .development)
 }
 
 struct BudgetCellView: View {
-    
     let budget: Budget
     
     var body: some View {

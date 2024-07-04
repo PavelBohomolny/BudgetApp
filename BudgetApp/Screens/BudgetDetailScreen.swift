@@ -1,14 +1,6 @@
-//
-//  BudgetDetailScreen.swift
-//  BudgetApp
-//
-//  Created by Mohammad Azam on 6/21/24.
-//
-
 import SwiftUI
 
 struct BudgetDetailScreen: View {
-    
     let budget: Budget
     
     @State private var name: String = ""
@@ -17,10 +9,7 @@ struct BudgetDetailScreen: View {
     @Environment(\.supabaseClient) private var supabaseClient
     
     private func updateBudget() async {
-        
-        guard let limit = limit,
-              let id = budget.id
-        else { return }
+        guard let limit = limit, let id = budget.id else { return }
         
         let updatedBudget = Budget(name: name, limit: limit)
         
@@ -33,13 +22,13 @@ struct BudgetDetailScreen: View {
         } catch {
             print(error)
         }
-        
     }
     
     var body: some View {
         Form {
             TextField("Enter name", text: $name)
             TextField("Enter limit", value: $limit, format: .number)
+            
             Button("Update") {
                 Task {
                     await updateBudget()
@@ -57,5 +46,6 @@ struct BudgetDetailScreen: View {
 #Preview {
     NavigationStack {
         BudgetDetailScreen(budget: Budget(name: "Groceries", limit: 500))
-    }.environment(\.supabaseClient, .development)
+    }
+    .environment(\.supabaseClient, .development)
 }
